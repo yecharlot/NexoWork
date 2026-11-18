@@ -2,143 +2,306 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NEXO — Conectamos trabajo y hogar</title>
-  <meta name="description" content="NEXO conecta personas que necesitan servicios del hogar en Cuba con quienes pueden realizarlos. CUP, USD, Zelle y MLC." />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>NEXO — El puente que une trabajo y hogar</title>
+  <meta name="description" content="NEXO conecta familias en Cuba con personas de confianza para limpieza, cuidado, cocina y más. También desde el exterior. CUP, USD, Zelle y MLC." />
+  <meta name="theme-color" content="#1e3a8a" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <meta property="og:title" content="NEXO — Conectamos trabajo y hogar" />
+  <meta property="og:description" content="Conectamos lo que se necesita con quien lo puede hacer." />
+  <meta property="og:image" content="/assets/nexoPrincipal.jpg" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <header class="header">
-    <div class="container">
-      <div class="nav">
-        <div class="brand"><div class="logo">N</div> NEXO</div>
+  <a class="sr-only" href="#main">Saltar al contenido</a>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/" data-nav="home" aria-label="NEXO inicio">
+        <img src="/assets/logo.svg" alt="" width="42" height="36" />
+        NEXO
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <button type="button" data-nav="home">Inicio</button>
+        <button type="button" data-nav="how">Cómo funciona</button>
+        <button type="button" data-nav="request" class="cta-nav">Necesito ayuda</button>
         <a href="/admin/">Admin</a>
-      </div>
-      <div class="hero">
-        <span class="pill">Cuba · hogar · trabajo digno</span>
-        <h1>Conectamos lo que se necesita con quien lo puede hacer</h1>
-        <p>El puente que une trabajo y hogar. Solicita limpieza, cuidado, cocina, jardinería y más. También desde el exterior para tus familiares en Cuba.</p>
-        <div class="cta-row">
-          <button class="btn btn-primary" data-go="request">Necesito un servicio</button>
-          <button class="btn btn-secondary" data-go="provider">Ofrezco un servicio</button>
-          <button class="btn btn-outline" data-go="abroad">Desde el exterior</button>
-        </div>
-      </div>
+      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section class="section" data-view="home">
-      <div class="features">
-        <div class="feature">
-          <h3>Para el hogar</h3>
-          <p class="muted">Limpieza, cuidado de ancianos y niños, cocina, jardinería, recogida de escombros y más.</p>
+  <main id="main">
+    <!-- HOME -->
+    <div class="panel active" id="view-home" data-view="home">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="eyebrow">🇨🇺 En Cuba · confianza · oportunidad</div>
+            <h1>Conectamos lo que se <span>necesita</span> con quien lo puede hacer</h1>
+            <p class="hero-lead">
+              El puente que une <strong>trabajo</strong> y <strong>hogar</strong>.
+              Encontramos a la persona adecuada y coordinamos todo — también si estás en el exterior.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" type="button" data-nav="request">🏠 Necesito un servicio</button>
+              <button class="btn btn-green" type="button" data-nav="provider">💪 Ofrezco un servicio</button>
+              <button class="btn btn-outline" type="button" data-nav="abroad">🌍 Desde el exterior</button>
+            </div>
+            <div class="trust-row" style="justify-content:flex-start;margin-top:1.1rem">
+              <span class="chip">CUP</span>
+              <span class="chip">USD</span>
+              <span class="chip green">Zelle</span>
+              <span class="chip">MLC</span>
+              <span class="chip green">WhatsApp</span>
+            </div>
+          </div>
+          <div class="hero-card">
+            <img class="logo-big" src="/assets/nexoPrincipal.jpg" alt="Logo NEXO: dos personas conectadas" />
+            <p class="quote">“Trabajamos para que el trabajo te encuentre a ti”</p>
+            <p style="text-align:center;margin:0;color:var(--muted);font-size:.92rem">
+              No necesitas internet ni redes para trabajar con nosotros.<br />
+              Coordinamos por teléfono y WhatsApp.
+            </p>
+            <div class="trust-row">
+              <a class="btn btn-wa" href="https://wa.me/5350937508" target="_blank" rel="noopener">💬 +53 50937508</a>
+            </div>
+          </div>
         </div>
-        <div class="feature">
-          <h3>Desde el exterior</h3>
-          <p class="muted">Contrata y coordina servicios para tus familiares residentes en Cuba.</p>
-        </div>
-        <div class="feature">
-          <h3>Pagos flexibles</h3>
-          <p class="muted">CUP, USD, Zelle y MLC. Coordinación humana por WhatsApp.</p>
-        </div>
-      </div>
-      <div class="section">
-        <div class="card">
-          <h2>Cómo funciona</h2>
-          <ol class="muted">
-            <li>Envías tu solicitud o te registras como proveedor.</li>
-            <li>NEXO revisa y hace el enlace adecuado.</li>
-            <li>Continúas la coordinación por WhatsApp con nuestro equipo.</li>
-          </ol>
-          <p><strong>Contacto:</strong> +53 50937508 · <a href="https://wa.me/5350937508" target="_blank" rel="noopener">WhatsApp</a> · lhmolam@gmail.com</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section hidden" data-view="request">
-      <button class="tab" data-go="home">← Inicio</button>
-      <h2>Solicitar un servicio</h2>
-      <p class="muted">Cuéntanos qué necesitas. Te contactamos para coordinar.</p>
-      <form class="form card" id="form_request">
-        <label for="service_type">Tipo de servicio</label>
-        <select id="service_type" name="service_type" required></select>
-        <label for="description">Descripción</label>
-        <textarea id="description" name="description" placeholder="Ej. Limpieza profunda de apartamento 2 habitaciones"></textarea>
-        <label for="municipality">Municipio / zona</label>
-        <select id="municipality" name="municipality"></select>
-        <label for="preferred_date">Fecha preferida</label>
-        <input id="preferred_date" name="preferred_date" type="date" />
-        <label for="contact_name">Tu nombre</label>
-        <input id="contact_name" name="contact_name" required autocomplete="name" />
-        <label for="contact_phone">Teléfono / WhatsApp</label>
-        <input id="contact_phone" name="contact_phone" required autocomplete="tel" placeholder="+53 …" />
-        <div class="actions">
-          <button class="btn btn-primary" type="submit">Enviar solicitud</button>
-          <a class="btn btn-wa" href="https://wa.me/5350937508" target="_blank" rel="noopener">WhatsApp directo</a>
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>¿Para quién es NEXO?</h2>
+            <p>Tres caminos claros. Elige el tuyo.</p>
+          </div>
+          <div class="audience-grid">
+            <article class="audience">
+              <div class="icon-wrap">🏠</div>
+              <h3>Necesitas ayuda en casa</h3>
+              <p>Limpieza, ancianos, niños, cocina, jardinería o escombros. Nosotros encontramos a la persona adecuada y coordinamos todo.</p>
+              <button class="btn btn-primary" type="button" data-nav="request">Solicitar servicio</button>
+            </article>
+            <article class="audience work">
+              <div class="icon-wrap">🤝</div>
+              <h3>Buscas trabajo en casa</h3>
+              <p>Hay familias que necesitan tus manos. No necesitas internet ni redes: nosotros te conectamos y te buscamos el trabajo.</p>
+              <button class="btn btn-green" type="button" data-nav="provider">Registrarme</button>
+            </article>
+            <article class="audience abroad">
+              <div class="icon-wrap">✈️</div>
+              <h3>Familia en Cuba</h3>
+              <p>Desde cualquier país puedes solicitar servicios para tus seres queridos. Tú pagas (USD/Zelle); nosotros coordinamos en Cuba.</p>
+              <button class="btn btn-outline" type="button" data-nav="abroad">Ayudar desde afuera</button>
+            </article>
+          </div>
         </div>
-        <div id="notice_request" class="notice"></div>
-      </form>
-    </section>
+      </section>
 
-    <section class="section hidden" data-view="provider">
-      <button class="tab" data-go="home">← Inicio</button>
-      <h2>Ofrecer un servicio</h2>
-      <p class="muted">Regístrate para recibir oportunidades de trabajo en tu zona.</p>
-      <form class="form card" id="form_provider">
-        <label>Servicios que ofreces</label>
-        <div id="provider_services" class="grid-2"></div>
-        <label for="zone">Zona donde puedes trabajar</label>
-        <input id="zone" name="zone" placeholder="Municipio o barrios" required />
-        <label for="name">Tu nombre</label>
-        <input id="name" name="name" required />
-        <label for="phone">Teléfono / WhatsApp</label>
-        <input id="phone" name="phone" required />
-        <label for="experience">Experiencia breve</label>
-        <textarea id="experience" name="experience" placeholder="Años de experiencia, referencias…"></textarea>
-        <div class="actions">
-          <button class="btn btn-primary" type="submit">Registrarme</button>
+      <section class="section" style="padding-top:0">
+        <div class="container">
+          <div class="section-head">
+            <h2>Servicios</h2>
+            <p>Lo esencial del hogar, con personas de confianza.</p>
+          </div>
+          <div class="services">
+            <div class="service"><div class="ico">🧹</div><strong>Limpieza</strong></div>
+            <div class="service"><div class="ico">💙</div><strong>Cuidado de ancianos</strong></div>
+            <div class="service"><div class="ico">👶</div><strong>Cuidado de niños</strong></div>
+            <div class="service"><div class="ico">🍲</div><strong>Cocina</strong></div>
+            <div class="service"><div class="ico">🌿</div><strong>Jardinería</strong></div>
+            <div class="service"><div class="ico">🚽</div><strong>Limpieza de baños</strong></div>
+            <div class="service"><div class="ico">🗑️</div><strong>Recogida de escombros</strong></div>
+            <div class="service"><div class="ico">✨</div><strong>Y más</strong></div>
+          </div>
         </div>
-        <div id="notice_provider" class="notice"></div>
-      </form>
-    </section>
+      </section>
 
-    <section class="section hidden" data-view="abroad">
-      <button class="tab" data-go="home">← Inicio</button>
-      <h2>Desde el exterior</h2>
-      <p class="muted">Contrata servicios para un familiar en Cuba. Pagos en USD, Zelle o MLC.</p>
-      <form class="form card" id="form_abroad">
-        <label for="abroad_name">Tu nombre (en el exterior)</label>
-        <input id="abroad_name" name="abroad_name" required />
-        <label for="abroad_contact">Tu WhatsApp o email</label>
-        <input id="abroad_contact" name="abroad_contact" required />
-        <label for="local_contact_name">Nombre del familiar en Cuba</label>
-        <input id="local_contact_name" name="local_contact_name" required />
-        <label for="local_contact_phone">Teléfono del familiar</label>
-        <input id="local_contact_phone" name="local_contact_phone" required />
-        <label for="municipality_abroad">Municipio del familiar</label>
-        <select id="municipality_abroad" name="municipality"></select>
-        <label for="service_type_abroad">Tipo de servicio</label>
-        <select id="service_type_abroad" name="service_type" required></select>
-        <label for="description_abroad">Detalles</label>
-        <textarea id="description_abroad" name="description"></textarea>
-        <div class="actions">
-          <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+      <section class="section" id="how">
+        <div class="container">
+          <div class="section-head">
+            <h2>Cómo funciona NEXO</h2>
+            <p>Simple, humano y confiable.</p>
+          </div>
+          <div class="steps">
+            <div class="step"><div class="num">1</div><h4>Tú nos contactas</h4><p>Persona que necesita o que ofrece servicio.</p></div>
+            <div class="step"><div class="num">2</div><h4>Buscamos y filtramos</h4><p>Elegimos la mejor opción para tu caso.</p></div>
+            <div class="step"><div class="num">3</div><h4>Coordinamos</h4><p>Encuentro, horarios y detalles por WhatsApp.</p></div>
+            <div class="step"><div class="num">4</div><h4>Se realiza el trabajo</h4><p>Con confianza y seguimiento de NEXO.</p></div>
+          </div>
         </div>
-        <div id="notice_abroad" class="notice"></div>
-      </form>
-    </section>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="promo" aria-label="Mensajes NEXO">
+            <div class="promo-track">
+              <div class="promo-card"><strong>Conectamos comunidades</strong>Creamos oportunidades de trabajo digno en Cuba.</div>
+              <div class="promo-card"><strong>Cuidamos a distancia</strong>Aunque estés lejos, tu familia no está sola.</div>
+              <div class="promo-card"><strong>Sin redes sociales</strong>Los proveedores no necesitan internet ni apps.</div>
+              <div class="promo-card"><strong>Pagos flexibles</strong>CUP, USD, Zelle y MLC.</div>
+              <div class="promo-card"><strong>Conectamos comunidades</strong>Creamos oportunidades de trabajo digno en Cuba.</div>
+              <div class="promo-card"><strong>Cuidamos a distancia</strong>Aunque estés lejos, tu familia no está sola.</div>
+              <div class="promo-card"><strong>Sin redes sociales</strong>Los proveedores no necesitan internet ni apps.</div>
+              <div class="promo-card"><strong>Pagos flexibles</strong>CUP, USD, Zelle y MLC.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="strip">
+            <div>
+              <h3>Rápido, confiable y seguro</h3>
+              <p>Nosotros encontramos a la persona adecuada y coordinamos todo. Tú solo das el primer paso.</p>
+              <div class="pay-badges">
+                <span>CUP</span><span>USD</span><span>Zelle</span><span>MLC</span>
+              </div>
+            </div>
+            <div style="display:grid;gap:.6rem">
+              <a class="btn btn-wa" href="https://wa.me/5350937508" target="_blank" rel="noopener">WhatsApp +53 50937508</a>
+              <a class="btn btn-outline" style="border-color:rgba(255,255,255,.35);color:#fff" href="mailto:lhmolam@gmail.com">lhmolam@gmail.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Material de difusión</h2>
+            <p>La misma identidad visual que ya usas en redes y calles.</p>
+          </div>
+          <div class="gallery">
+            <figure><img src="/assets/nexoNuevoLote1.jpg" alt="Flyer NEXO ayuda en casa" loading="lazy" /></figure>
+            <figure><img src="/assets/nexoEmpleados.jpg" alt="Flyer busca trabajo en casa" loading="lazy" /></figure>
+            <figure><img src="/assets/nexoNuevoLote3.jpg" alt="Flyer familia en Cuba desde el exterior" loading="lazy" /></figure>
+            <figure><img src="/assets/nexoComo.jpg" alt="Cómo funciona NEXO" loading="lazy" /></figure>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- REQUEST -->
+    <div class="panel" id="view-request" data-view="request">
+      <section class="section">
+        <div class="container">
+          <button class="back-link" type="button" data-nav="home">← Volver al inicio</button>
+          <div class="form-card">
+            <h2>¿Necesitas ayuda en casa?</h2>
+            <p class="sub">Cuéntanos qué necesitas. Te contactamos para coordinar.</p>
+            <form id="form_request">
+              <label for="service_type">Tipo de servicio</label>
+              <select id="service_type" name="service_type" required></select>
+              <label for="description">Descripción</label>
+              <textarea id="description" name="description" placeholder="Ej. Limpieza profunda de apartamento 2 habitaciones"></textarea>
+              <label for="municipality">Municipio / zona</label>
+              <select id="municipality" name="municipality"></select>
+              <label for="preferred_date">Fecha preferida</label>
+              <input id="preferred_date" name="preferred_date" type="date" />
+              <label for="contact_name">Tu nombre</label>
+              <input id="contact_name" name="contact_name" required autocomplete="name" />
+              <label for="contact_phone">Teléfono / WhatsApp</label>
+              <input id="contact_phone" name="contact_phone" required autocomplete="tel" placeholder="+53 …" />
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+                <a class="btn btn-wa" href="https://wa.me/5350937508" target="_blank" rel="noopener">WhatsApp directo</a>
+              </div>
+              <div id="notice_request" class="notice" role="status"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PROVIDER -->
+    <div class="panel" id="view-provider" data-view="provider">
+      <section class="section">
+        <div class="container">
+          <button class="back-link" type="button" data-nav="home">← Volver al inicio</button>
+          <div class="form-card">
+            <h2>¿Buscas trabajo en casa?</h2>
+            <p class="sub">Hay familias que necesitan tus manos. Nosotros te conectamos. No necesitas internet ni redes.</p>
+            <form id="form_provider">
+              <label>Servicios que ofreces</label>
+              <div id="provider_services" class="checks"></div>
+              <label for="zone">Zona donde puedes trabajar</label>
+              <input id="zone" name="zone" placeholder="Municipio o barrios" required />
+              <label for="name">Tu nombre</label>
+              <input id="name" name="name" required />
+              <label for="phone">Teléfono / WhatsApp</label>
+              <input id="phone" name="phone" required />
+              <label for="experience">Experiencia breve</label>
+              <textarea id="experience" name="experience" placeholder="Años de experiencia, referencias…"></textarea>
+              <div class="form-actions">
+                <button class="btn btn-green" type="submit">Registrarme</button>
+              </div>
+              <div id="notice_provider" class="notice" role="status"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ABROAD -->
+    <div class="panel" id="view-abroad" data-view="abroad">
+      <section class="section">
+        <div class="container">
+          <button class="back-link" type="button" data-nav="home">← Volver al inicio</button>
+          <div class="form-card">
+            <h2>¿Tienes familia en Cuba?</h2>
+            <p class="sub">Desde cualquier país puedes solicitar servicios para tus seres queridos. Tú pagas (USD o Zelle); nosotros coordinamos en Cuba.</p>
+            <form id="form_abroad">
+              <label for="abroad_name">Tu nombre (en el exterior)</label>
+              <input id="abroad_name" name="abroad_name" required />
+              <label for="abroad_contact">Tu WhatsApp o email</label>
+              <input id="abroad_contact" name="abroad_contact" required />
+              <label for="local_contact_name">Nombre del familiar en Cuba</label>
+              <input id="local_contact_name" name="local_contact_name" required />
+              <label for="local_contact_phone">Teléfono del familiar</label>
+              <input id="local_contact_phone" name="local_contact_phone" required />
+              <label for="municipality_abroad">Municipio del familiar</label>
+              <select id="municipality_abroad" name="municipality"></select>
+              <label for="service_type_abroad">Tipo de servicio</label>
+              <select id="service_type_abroad" name="service_type" required></select>
+              <label for="description_abroad">Detalles</label>
+              <textarea id="description_abroad" name="description"></textarea>
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+              </div>
+              <div id="notice_abroad" class="notice" role="status"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <strong>NEXO</strong> — El puente que une trabajo y hogar.<br />
-      +53 50937508 · <a href="https://wa.me/5350937508">WhatsApp</a> · lhmolam@gmail.com<br />
-      Pagos: CUP · USD · Zelle · MLC
+    <div class="container footer-grid">
+      <div>
+        <h4>NEXO</h4>
+        <p>El puente que une trabajo y hogar.</p>
+        <p>Conectamos lo que se necesita con quien lo puede hacer.</p>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <p>📞 <a href="tel:+5350937508">+53 50937508</a></p>
+        <p>💬 <a href="https://wa.me/5350937508" target="_blank" rel="noopener">WhatsApp</a></p>
+        <p>✉️ <a href="mailto:lhmolam@gmail.com">lhmolam@gmail.com</a></p>
+      </div>
+      <div>
+        <h4>Pagos</h4>
+        <ul>
+          <li>CUP · USD · Zelle · MLC</li>
+          <li>Coordinación humana y cercana</li>
+        </ul>
+      </div>
     </div>
   </footer>
 
-  <a class="float-wa" href="https://wa.me/5350937508" target="_blank" rel="noopener" title="WhatsApp">💬</a>
+  <a class="float-wa" href="https://wa.me/5350937508" target="_blank" rel="noopener" title="WhatsApp NEXO" aria-label="Abrir WhatsApp">💬</a>
   <script src="/app.js"></script>
 </body>
 </html>

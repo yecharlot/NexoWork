@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-label="NEXO">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+  <!-- left person navy -->
+  <circle cx="70" cy="48" r="22" fill="#1e3a8a"/>
+  <path d="M38 120c0-28 14-48 32-48s32 20 32 48v18H38z" fill="#1e3a8a"/>
+  <!-- right person green -->
+  <circle cx="170" cy="48" r="22" fill="#5a9e6f"/>
+  <path d="M138 120c0-28 14-48 32-48s32 20 32 48v18h-64z" fill="#5a9e6f"/>
+  <!-- connecting arc -->
+  <path d="M92 55c20-28 36-28 56 0" fill="none" stroke="#5a9e6f" stroke-width="8" stroke-linecap="round"/>
+  <!-- handshake / bridge hands -->
+  <path d="M95 115c12 18 38 18 50 0" fill="none" stroke="#1e3a8a" stroke-width="10" stroke-linecap="round"/>
+  <path d="M100 118c10 14 30 14 40 0" fill="none" stroke="#5a9e6f" stroke-width="8" stroke-linecap="round"/>
+</svg>
