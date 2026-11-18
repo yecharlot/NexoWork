@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NEXO Admin</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="header" style="padding-bottom:1rem">
+    <div class="container nav">
+      <div class="brand"><div class="logo">N</div> NEXO Admin</div>
+      <a href="/">Sitio público</a>
+    </div>
+  </header>
+  <main class="container section">
+    <div id="login" class="card admin-login">
+      <h2>Acceso administración</h2>
+      <p class="muted">Token configurado en <code>NEXO_ADMIN_TOKEN</code>.</p>
+      <form class="form" id="form_login">
+        <label>Token admin</label>
+        <input id="token" type="password" autocomplete="current-password" required />
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">Entrar</button>
+        </div>
+        <div id="login_err" class="notice error"></div>
+      </form>
+    </div>
+
+    <div id="panel" class="hidden">
+      <div class="tabs">
+        <button class="tab active" data-tab="requests">Solicitudes</button>
+        <button class="tab" data-tab="providers">Proveedores</button>
+        <button class="tab" data-tab="matches">Matches</button>
+      </div>
+      <div id="summary" class="muted" style="margin-bottom:1rem"></div>
+
+      <div id="tab_requests" class="card table-wrap">
+        <h3>Solicitudes</h3>
+        <table>
+          <thead><tr><th>ID</th><th>Servicio</th><th>Zona</th><th>Contacto</th><th>Estado</th><th>Acciones</th></tr></thead>
+          <tbody id="rows_requests"></tbody>
+        </table>
+      </div>
+      <div id="tab_providers" class="card table-wrap hidden">
+        <h3>Proveedores</h3>
+        <table>
+          <thead><tr><th>ID</th><th>Nombre</th><th>Zona</th><th>Servicios</th><th>Tel</th></tr></thead>
+          <tbody id="rows_providers"></tbody>
+        </table>
+      </div>
+      <div id="tab_matches" class="card table-wrap hidden">
+        <h3>Matches</h3>
+        <form class="form" id="form_match" style="margin-bottom:1rem">
+          <div class="grid-2">
+            <div>
+              <label>Request ID</label>
+              <input name="request_id" required />
+            </div>
+            <div>
+              <label>Provider ID</label>
+              <input name="provider_id" required />
+            </div>
+          </div>
+          <label>Notas</label>
+          <input name="notes" />
+          <div class="actions"><button class="btn btn-primary" type="submit">Crear Match</button></div>
+        </form>
+        <table>
+          <thead><tr><th>ID</th><th>Request</th><th>Provider</th><th>Estado</th><th>Notas</th></tr></thead>
+          <tbody id="rows_matches"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  <script>
+    const key = "nexo_admin_token";
+    let token = localStorage.getItem(key) || "";
+
+    function headers() {
+      return { "Content-Type": "application/json", "X-NEXO-Admin-Token": token };
+    }
+    async function api(path, opts = {}) {
+      const r = await fetch(path, { ...opts, headers: { ...headers(), ...(opts.headers || {}) } });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(data.error || r.statusText);
+      return data;
+    }
+    function badge(st) {
+      return `<span class="badge ${st || ""}">${st || ""}</span>`;
+    }
+    async function refresh() {
+      const [sum, reqs, provs, matches] = await Promise.all([
+        api("/api/admin/summary"),
+        api("/api/requests"),
+        api("/api/providers"),
+        api("/api/matches"),
+      ]);
+      document.getElementById("summary").textContent =
+        `Solicitudes: ${sum.requests} · Proveedores: ${sum.providers} · Matches: ${sum.matches} · Motor: ${sum.engine}`;
+      document.getElementById("rows_requests").innerHTML = (reqs.requests || []).map(r => `
+        <tr>
+          <td><code>${r.id}</code>${r.from_abroad ? " 🌍" : ""}</td>
+          <td>${r.service_type}<div class="muted">${r.description || ""}</div></td>
+          <td>${r.municipality || ""}</td>
+          <td>${r.contact_name}<br>${r.contact_phone}</td>
+          <td>${badge(r.status)}</td>
+          <td>
+            <button class="tab" onclick="setStatus('${r.id}','in_process')">En proceso</button>
+            <button class="tab" onclick="setStatus('${r.id}','completed')">Completado</button>
+          </td>
+        </tr>`).join("");
+      document.getElementById("rows_providers").innerHTML = (provs.providers || []).map(p => `
+        <tr>
+          <td><code>${p.id}</code></td>
+          <td>${p.name}</td>
+          <td>${p.zone || ""}</td>
+          <td>${(p.services || []).join(", ")}</td>
+          <td>${p.phone}</td>
+        </tr>`).join("");
+      document.getElementById("rows_matches").innerHTML = (matches.matches || []).map(m => `
+        <tr>
+          <td><code>${m.id}</code></td>
+          <td>${m.request_id}</td>
+          <td>${m.provider_id}</td>
+          <td>${badge(m.status)}</td>
+          <td>${m.notes || ""}</td>
+        </tr>`).join("");
+    }
+    async function setStatus(id, status) {
+      await api("/api/requests/" + id, { method: "PATCH", body: JSON.stringify({ status }) });
+      await refresh();
+    }
+    document.getElementById("form_login").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      token = document.getElementById("token").value.trim();
+      try {
+        await api("/api/admin/summary");
+        localStorage.setItem(key, token);
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("panel").classList.remove("hidden");
+        await refresh();
+      } catch (err) {
+        const el = document.getElementById("login_err");
+        el.classList.add("show");
+        el.textContent = err.message || "Token inválido";
+      }
+    });
+    document.getElementById("form_match").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      await api("/api/matches", {
+        method: "POST",
+        body: JSON.stringify({
+          request_id: fd.get("request_id"),
+          provider_id: fd.get("provider_id"),
+          notes: fd.get("notes"),
+        }),
+      });
+      e.target.reset();
+      await refresh();
+    });
+    document.querySelectorAll("[data-tab]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("[data-tab]").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        ["requests","providers","matches"].forEach(t => {
+          document.getElementById("tab_" + t).classList.toggle("hidden", t !== btn.getAttribute("data-tab"));
+        });
+      });
+    });
+    if (token) {
+      api("/api/admin/summary").then(async () => {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("panel").classList.remove("hidden");
+        await refresh();
+      }).catch(() => localStorage.removeItem(key));
+    }
+  </script>
+</body>
+</html>
