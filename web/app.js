@@ -1,8 +1,8 @@
 
 const API = "";
 const WA = "https://wa.me/5350937508";
-
 const views = ["home", "request", "provider", "abroad"];
+let PROVINCES = {};
 
 function showView(name) {
   if (name === "how") {
@@ -18,12 +18,22 @@ function showView(name) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function fillSelect(id, items) {
+function fillSelect(id, items, placeholder) {
   const el = document.getElementById(id);
   if (!el) return;
   el.innerHTML =
-    `<option value="">Seleccione…</option>` +
+    `<option value="">${placeholder || "Seleccione…"}</option>` +
     items.map((x) => `<option value="${x}">${x}</option>`).join("");
+}
+
+function bindProvince(provinceId, municipalityId) {
+  const pEl = document.getElementById(provinceId);
+  const mEl = document.getElementById(municipalityId);
+  if (!pEl || !mEl) return;
+  pEl.addEventListener("change", () => {
+    const list = PROVINCES[pEl.value] || [];
+    fillSelect(municipalityId, list, "Municipio…");
+  });
 }
 
 async function loadMeta() {
@@ -32,8 +42,14 @@ async function loadMeta() {
     const m = await r.json();
     fillSelect("service_type", m.service_types || []);
     fillSelect("service_type_abroad", m.service_types || []);
-    fillSelect("municipality", m.municipalities || []);
-    fillSelect("municipality_abroad", m.municipalities || []);
+    PROVINCES = m.provinces || {};
+    const provinceNames = Object.keys(PROVINCES).sort((a, b) => a.localeCompare(b, "es"));
+    fillSelect("province", provinceNames, "Provincia…");
+    fillSelect("province_abroad", provinceNames, "Provincia…");
+    fillSelect("provider_province", provinceNames, "Provincia…");
+    bindProvince("province", "municipality");
+    bindProvince("province_abroad", "municipality_abroad");
+    bindProvince("provider_province", "provider_municipality");
     const box = document.getElementById("provider_services");
     if (box) {
       box.innerHTML = (m.service_types || [])
@@ -67,14 +83,20 @@ async function postJSON(path, body) {
   return data;
 }
 
+function municipalityLabel(province, municipality) {
+  if (province && municipality) return `${province} — ${municipality}`;
+  return municipality || province || "";
+}
+
 async function submitRequest(e) {
   e.preventDefault();
   const fd = new FormData(e.target);
   const body = Object.fromEntries(fd.entries());
   body.from_abroad = false;
+  body.municipality = municipalityLabel(body.province, body.municipality);
   try {
     const data = await postJSON("/api/requests", body);
-    setNotice("notice_request", true, data.message || "Solicitud enviada.", data.whatsapp_url);
+    setNotice("notice_request", true, data.message || "Solicitud enviada. Te contactaremos pronto.", data.whatsapp_url);
     e.target.reset();
   } catch (err) {
     setNotice("notice_request", false, err.message);
@@ -88,6 +110,7 @@ async function submitAbroad(e) {
   body.from_abroad = true;
   body.contact_name = body.local_contact_name;
   body.contact_phone = body.local_contact_phone;
+  body.municipality = municipalityLabel(body.province, body.municipality);
   try {
     const data = await postJSON("/api/requests", body);
     setNotice("notice_abroad", true, data.message || "Solicitud enviada.", data.whatsapp_url);
@@ -101,11 +124,15 @@ async function submitProvider(e) {
   e.preventDefault();
   const fd = new FormData(e.target);
   const services = [...document.querySelectorAll("#provider_services input:checked")].map((x) => x.value);
+  const zoneParts = [
+    municipalityLabel(fd.get("provider_province"), fd.get("provider_municipality")),
+    fd.get("zone"),
+  ].filter(Boolean);
   try {
     const data = await postJSON("/api/providers", {
       name: fd.get("name"),
       phone: fd.get("phone"),
-      zone: fd.get("zone"),
+      zone: zoneParts.join(" · "),
       experience: fd.get("experience"),
       services,
     });

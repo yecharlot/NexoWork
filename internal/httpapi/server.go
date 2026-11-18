@@ -1,6 +1,7 @@
 package httpapi
 
 import (
+	"fmt"
 	"crypto/subtle"
 	"encoding/json"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 	"time"
 
 	"github.com/yecharlot/NexoWork/internal/domain"
+	"github.com/yecharlot/NexoWork/internal/notify"
 	"github.com/yecharlot/NexoWork/internal/store"
 )
 
@@ -19,10 +21,16 @@ type Server struct {
 	store      *store.Store
 	adminToken string
 	webDir     string
+	notifier   *notify.Notifier
 }
 
 func New(st *store.Store, adminToken, webDir string) *Server {
-	return &Server{store: st, adminToken: adminToken, webDir: webDir}
+	return &Server{
+		store:      st,
+		adminToken: adminToken,
+		webDir:     webDir,
+		notifier:   notify.New(notify.LoadConfig()),
+	}
 }
 
 func (s *Server) Handler() http.Handler {
@@ -109,6 +117,7 @@ func (s *Server) meta(w http.ResponseWriter, r *http.Request) {
 		"payments": []string{"CUP", "USD", "Zelle", "MLC"},
 		"service_types": domain.ServiceTypes,
 		"municipalities": domain.Municipalities,
+		"provinces": domain.Provinces,
 	})
 }
 
@@ -164,6 +173,24 @@ func (s *Server) requests(w http.ResponseWriter, r *http.Request) {
 			writeJSON(w, 500, map[string]string{"error": err.Error()})
 			return
 		}
+		kind := "request"
+		if req.FromAbroad {
+			kind = "abroad"
+		}
+		go s.notifier.Notify(notify.RequestEvent(kind, map[string]string{
+			"id":               req.ID,
+			"servicio":         req.ServiceType,
+			"municipio":        req.Municipality,
+			"fecha":            req.PreferredDate,
+			"descripcion":      req.Description,
+			"nombre":           req.ContactName,
+			"telefono":         req.ContactPhone,
+			"desde_exterior":   fmt.Sprintf("%v", req.FromAbroad),
+			"nombre_exterior":  req.AbroadName,
+			"contacto_exterior": req.AbroadContact,
+			"familiar":         req.LocalContactName,
+			"tel_familiar":     req.LocalContactPhone,
+		}))
 		waText := buildRequestWAText(req)
 		writeJSON(w, 201, map[string]any{
 			"request": req,
@@ -245,6 +272,14 @@ func (s *Server) providers(w http.ResponseWriter, r *http.Request) {
 			writeJSON(w, 500, map[string]string{"error": err.Error()})
 			return
 		}
+		go s.notifier.Notify(notify.ProviderEvent(map[string]string{
+			"id":          p.ID,
+			"nombre":      p.Name,
+			"telefono":    p.Phone,
+			"zona":        p.Zone,
+			"servicios":   strings.Join(p.Services, ", "),
+			"experiencia": p.Experience,
+		}))
 		waText := "Hola NEXO, me registro como proveedor.\nNombre: " + p.Name + "\nTel: " + p.Phone + "\nZona: " + p.Zone
 		writeJSON(w, 201, map[string]any{
 			"provider": p,

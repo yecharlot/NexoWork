@@ -167,20 +167,6 @@
         </div>
       </section>
 
-      <section class="section">
-        <div class="container">
-          <div class="section-head">
-            <h2>Material de difusión</h2>
-            <p>La misma identidad visual que ya usas en redes y calles.</p>
-          </div>
-          <div class="gallery">
-            <figure><img src="/assets/nexoNuevoLote1.jpg" alt="Flyer NEXO ayuda en casa" loading="lazy" /></figure>
-            <figure><img src="/assets/nexoEmpleados.jpg" alt="Flyer busca trabajo en casa" loading="lazy" /></figure>
-            <figure><img src="/assets/nexoNuevoLote3.jpg" alt="Flyer familia en Cuba desde el exterior" loading="lazy" /></figure>
-            <figure><img src="/assets/nexoComo.jpg" alt="Cómo funciona NEXO" loading="lazy" /></figure>
-          </div>
-        </div>
-      </section>
     </div>
 
     <!-- REQUEST -->
@@ -196,8 +182,10 @@
               <select id="service_type" name="service_type" required></select>
               <label for="description">Descripción</label>
               <textarea id="description" name="description" placeholder="Ej. Limpieza profunda de apartamento 2 habitaciones"></textarea>
-              <label for="municipality">Municipio / zona</label>
-              <select id="municipality" name="municipality"></select>
+              <label for="province">Provincia</label>
+              <select id="province" name="province" required></select>
+              <label for="municipality">Municipio</label>
+              <select id="municipality" name="municipality" required></select>
               <label for="preferred_date">Fecha preferida</label>
               <input id="preferred_date" name="preferred_date" type="date" />
               <label for="contact_name">Tu nombre</label>
@@ -226,8 +214,12 @@
             <form id="form_provider">
               <label>Servicios que ofreces</label>
               <div id="provider_services" class="checks"></div>
-              <label for="zone">Zona donde puedes trabajar</label>
-              <input id="zone" name="zone" placeholder="Municipio o barrios" required />
+              <label for="provider_province">Provincia</label>
+              <select id="provider_province" name="provider_province" required></select>
+              <label for="provider_municipality">Municipio</label>
+              <select id="provider_municipality" name="provider_municipality" required></select>
+              <label for="zone">Barrio o detalle (opcional)</label>
+              <input id="zone" name="zone" placeholder="Barrios, zonas específicas…" />
               <label for="name">Tu nombre</label>
               <input id="name" name="name" required />
               <label for="phone">Teléfono / WhatsApp</label>
@@ -261,8 +253,10 @@
               <input id="local_contact_name" name="local_contact_name" required />
               <label for="local_contact_phone">Teléfono del familiar</label>
               <input id="local_contact_phone" name="local_contact_phone" required />
+              <label for="province_abroad">Provincia del familiar</label>
+              <select id="province_abroad" name="province" required></select>
               <label for="municipality_abroad">Municipio del familiar</label>
-              <select id="municipality_abroad" name="municipality"></select>
+              <select id="municipality_abroad" name="municipality" required></select>
               <label for="service_type_abroad">Tipo de servicio</label>
               <select id="service_type_abroad" name="service_type" required></select>
               <label for="description_abroad">Detalles</label>

@@ -107,6 +107,42 @@ curl -s -X POST http://127.0.0.1:8080/api/requests \
   }'
 ```
 
+
+## Notificaciones (email / SMS)
+
+Cada solicitud o registro de proveedor se guarda en el store y además:
+
+1. Se escribe en `data/notifications.log` (siempre).
+2. Se envía **email** a `lhmolam@gmail.com` si configuras SMTP.
+3. Se envía **SMS** si configuras un gateway HTTP.
+
+### Email con Gmail (recomendado)
+
+1. Activa verificación en 2 pasos en la cuenta Gmail.
+2. Crea una [contraseña de aplicación](https://myaccount.google.com/apppasswords).
+3. Exporta variables antes de arrancar:
+
+```bash
+export NEXO_SMTP_HOST=smtp.gmail.com
+export NEXO_SMTP_PORT=587
+export NEXO_SMTP_USER=lhmolam@gmail.com
+export NEXO_SMTP_PASS='tu-app-password'
+export NEXO_NOTIFY_EMAIL=lhmolam@gmail.com
+```
+
+### SMS (opcional)
+
+Si tienes un proveedor SMS con API HTTP JSON `{ "to", "message" }`:
+
+```bash
+export NEXO_SMS_URL='https://tu-gateway.example/send'
+export NEXO_SMS_TOKEN='opcional'
+export NEXO_NOTIFY_PHONE='+5350937508'
+```
+
+Sin SMTP/SMS configurado el sistema sigue funcionando: los datos quedan en el admin y en el log local, y el usuario puede continuar por WhatsApp.
+
+
 ## Despliegue en VPS simple
 
 ```bash
